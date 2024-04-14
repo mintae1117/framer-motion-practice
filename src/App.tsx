@@ -1,90 +1,158 @@
 import styled from "styled-components";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { useRef } from "react";
 
 const Wrapper = styled.div`
-  height: 100vh;
+  background: linear-gradient(135deg, #e09, #d0e);
+  min-height: 100vh;
   width: 100vw;
   display: flex;
-  justify-content: space-around;
-  align-items: center;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding-bottom: 300px;
+  padding-top: 100px;// extra paddings
 `;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 400px 200px;
-  width: 50vw;
-  gap: 10px;
-`;
-
 
 const Box1 = styled(motion.div)`
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 10px;
-  width: 400px;
+  width: 200px;
   height: 200px;
+  background-color: tomato;
+  border-radius: 40px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-`;
-const Box2 = styled(motion.div)`
-  background-color: rgba(255, 255, 255, 1);
-  border-radius: 10px;
-  width: 400px;
-  height: 200px;
-  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
-`;
+`;// box css
 
-const Overlay = styled(motion.div)`
-  width: 100%;
-  height: 100%;
-  position: absolute;
+const Box2 = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  background-color: white;
+  border-radius: 40px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;// box css
+
+
+const Box3 = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 40px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;// box css
+
+const Box4 = styled(motion.div)`
+  width: 200px;
+  height: 200px;
+  background-color: rgba(255, 255, 255, 1);
+  border-radius: 40px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;// box css
+
+const BiggerBox = styled.div`
+  width: 600px;
+  height: 600px;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 40px;
   display: flex;
+  gap: 20px;
   justify-content: center;
   align-items: center;
 `;
 
-const overlay = {
-  hidden: { backgroundColor: "rgba(0, 0, 0, 0)" },
-  visible: { backgroundColor: "rgba(0, 0, 0, 0.5)" },
-  exit: { backgroundColor: "rgba(0, 0, 0, 0)" },
+const Circle = styled(motion.div)`
+  background-color: white;
+  height: 70px;
+  width: 70px;
+  place-self: center;
+  border-radius: 35px;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.06);
+`;// circle css
+
+const myVars = {
+  start: { scale: 0 },
+  end: { scale: 1, rotateZ: 360, transition: { type: "spring", delay: 0.5 } },
+};// using variants
+
+const boxVariants = {
+  start: {
+    opacity: 0,
+    scale: 0,
+  },
+  end: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: "spring",
+      duration: 1.5,
+      bounce: 1.0,
+      delayChildren: 1,// delay childern
+      staggerChildren: 0.5,// delay childrens in orderly
+    },
+  },
+};// box variants
+
+const circleVariants = {
+  start: {
+    opacity: 0,
+    y: 100,// x and y are only framer motion properties.
+  },
+  end: {
+    opacity: 1,
+    y: 0,
+  },
+};// circle variants
+
+const boxvarients2 = {
+  hover: { scale: 1.2, rotateZ: 90 },
+  click: { scale: 1, borderRadius: "50%", transition: { duration: 0.1} },
+  drag: { backgroundColor: "rgb(31, 230, 114)", transition: { duration: 0.1 } },
 };
 
-const Mybtn = styled(motion.button)`
-  position: absolute;
-  bottom: 180px;
-  left: 50%;
-  font-size: 30px;
-`;
-
 function App() {
-  const [id, setId] = useState<null | string>(null);
+  const biggerBoxRef = useRef<HTMLDivElement>(null);
   return (
-    <>
     <Wrapper>
-      <Grid>
-        <Box1 onClick={() => setId("1")} key={"1"} layoutId={"1"} whileHover={{scale:1.1}} />
-        <Box2 />
-        <Box2 />
-        <Box1 onClick={() => setId("4")} key={"4"} layoutId={"4"} />
-      </Grid>
-      <AnimatePresence>
-        {id ? (
-          <Overlay
-            variants={overlay}
-            onClick={() => setId(null)}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-          >
-            <Box1 layoutId={id} style={{ width: 400, height: 200 }} />
-          </Overlay>
-        ) : null}
-      </AnimatePresence>
+      <Box1
+        transition={{ type: "spring", delay: 1 }}
+        initial={{ scale: 0 }}
+        animate={{ scale: 1, rotateZ: 360 }}
+      />
+
+      <Box2 variants={myVars} initial="start" animate="end" />
+
+      <Box3 variants={boxVariants} initial="start" animate="end">
+        <Circle variants={circleVariants} />
+        <Circle variants={circleVariants} />
+        <Circle variants={circleVariants} />
+        <Circle variants={circleVariants} />
+      </Box3>
+      
+      <BiggerBox ref={biggerBoxRef}>
+        <Box4 
+          drag
+          dragSnapToOrigin
+          dragElastic={0.5}
+          dragConstraints={biggerBoxRef}
+          variants={boxvarients2}
+          whileHover="hover"
+          whileTap="click"
+          whileDrag="drag"
+        />
+        <Box4
+          drag
+          variants={boxvarients2}
+          whileHover="hover"
+          whileDrag="drag"
+          whileTap="click"
+          dragConstraints={biggerBoxRef}
+      />
+      </BiggerBox>
+
+
     </Wrapper>
-    <Mybtn whileHover={{scale:1.1}}>click!</Mybtn>
-    </>
   );
 }
 
-export default App;
+export default App
