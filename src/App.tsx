@@ -59,7 +59,7 @@ const BiggerBox = styled.div`
   gap: 20px;
   justify-content: center;
   align-items: center;
-`;
+`;// drag constrain box
 
 const Circle = styled(motion.div)`
   background-color: white;
@@ -108,7 +108,7 @@ const boxvarients2 = {
   hover: { scale: 1.2, rotateZ: 90 },
   click: { scale: 1, borderRadius: "50%", transition: { duration: 0.1} },
   drag: { backgroundColor: "rgb(31, 230, 114)", transition: { duration: 0.1 } },
-};
+};// box varaient 02
 
 function App() {
   const biggerBoxRef = useRef<HTMLDivElement>(null);
