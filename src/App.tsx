@@ -1,8 +1,8 @@
 import styled from "styled-components";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
-const Wrapper = styled.div`
+const Wrapper = styled(motion.div)`
   background: linear-gradient(135deg, #e09, #d0e);
   min-height: 100vh;
   width: 100vw;
@@ -105,15 +105,28 @@ const circleVariants = {
 };// circle variants
 
 const boxvarients2 = {
-  hover: { scale: 1.2, rotateZ: 90 },
+  hover: { scale: 1, rotateZ: 90 },
   click: { scale: 1, borderRadius: "50%", transition: { duration: 0.1} },
   drag: { backgroundColor: "rgb(31, 230, 114)", transition: { duration: 0.1 } },
 };// box varaient 02
 
 function App() {
   const biggerBoxRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const rotateZ = useTransform(x, [-800, 800], [-360, 360]);// scroll x rotate animation.
+  const gradient = useTransform(
+    x,
+    [-800, 800],
+    [
+      "linear-gradient(135deg, rgb(0, 210, 238), rgb(0, 83, 238))",
+      "linear-gradient(135deg, rgb(0, 238, 155), rgb(238, 178, 0))",
+    ]
+  );// bg color gradient
+  const { scrollYProgress } = useScroll();
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 0.7]);// scroll y scale
+
   return (
-    <Wrapper>
+    <Wrapper style={{ background: gradient }}>
       <Box1
         transition={{ type: "spring", delay: 1 }}
         initial={{ scale: 0 }}
@@ -150,6 +163,7 @@ function App() {
       />
       </BiggerBox>
 
+      <Box4 style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
 
     </Wrapper>
   );
