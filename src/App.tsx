@@ -12,7 +12,7 @@ const Wrapper = styled(motion.div)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 100px;
   padding-bottom: 300px;
   padding-top: 100px;// extra paddings
 `;
@@ -182,6 +182,7 @@ function App() {
         <Circle variants={circleVariants} />
       </Box3>
       
+      <h3 style={{marginTop:30, fontSize:50}}>Drag Box 01</h3>
       <BiggerBox ref={biggerBoxRef}>
         <Box4 
           drag
@@ -203,6 +204,7 @@ function App() {
       />
       </BiggerBox>
 
+      <h3 style={{marginTop:30, fontSize:50}}>Drag Box 02</h3>
       <Box4 style={{ x, rotateZ, scale }} drag="x" dragSnapToOrigin />
 
       <Svg
@@ -222,7 +224,7 @@ function App() {
         ></motion.path>
       </Svg>
 
-      <button onClick={toggleShowing}>Click</button>
+      <button onClick={toggleShowing} style={{fontSize:50}}>Click</button>
       <AnimatePresence>
         {showing ? (
           <Box1
