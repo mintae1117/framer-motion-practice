@@ -165,7 +165,6 @@ function App() {
   const [showing, setShowing] = useState(false);
   const toggleShowing = () => setShowing((prev) => !prev);
 
-
   return (
     <Wrapper style={{ background: gradient }}>
       <Box1
